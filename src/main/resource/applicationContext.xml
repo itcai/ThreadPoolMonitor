@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="RunnableTask" class="com.caipangzi.RunnableTask"></bean>
+
+    <bean id="ThreadPoolMonitorService" class="com.caipangzi.ThreadPoolMonitorService">
+        <property name="monitorPeriod" value="5"></property>
+    </bean>
+
+    <bean id="RejectTaskHandler" class="com.caipangzi.RejectTaskHandler"></bean>
+
+    <bean id="ThreadPoolExecutorService" class="com.caipangzi.ThreadPoolExecutorService">
+        <property name="corePoolSize" value="1"></property>
+        <property name="maxPoolSize" value="3"></property>
+        <property name="keepAliveTime" value="10"></property>
+        <property name="queueCapacity" value="3"></property>
+        <property name="rejectTaskHandler" ref="RejectTaskHandler"></property>
+    </bean>
+
+    <bean id="Tester" class="com.caipangzi.Tester">
+        <property name="threadPoolExecutorService" ref="ThreadPoolExecutorService"></property>
+        <property name="threadPoolMonitorService" ref="ThreadPoolMonitorService"></property>
+    </bean>
+
+</beans>
